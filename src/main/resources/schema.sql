@@ -1,4 +1,10 @@
 DROP TABLE IF EXISTS Category;
+DROP TABLE IF EXISTS Product;
+DROP TABLE IF EXISTS Store_Product;
+-- DROP TABLE IF EXISTS Employee;
+-- DROP TABLE IF EXISTS Customer_Card;
+-- DROP TABLE IF EXISTS "Check";
+-- DROP TABLE IF EXISTS Sale;
 
 CREATE TABLE Category (
     category_number INT          NOT NULL AUTO_INCREMENT,
@@ -6,38 +12,39 @@ CREATE TABLE Category (
     CONSTRAINT PK_Category PRIMARY KEY (category_number)
     );
 
--- CREATE TABLE IF NOT EXISTS Product (
---     id_product      INT           NOT NULL AUTO_INCREMENT,
---     category_number INT           NOT NULL,
---     product_name    VARCHAR(50)   NOT NULL,
---     manufacturer    VARCHAR(50)   NOT NULL,
---     characteristics VARCHAR(100)  NOT NULL,
---     CONSTRAINT PK_Product      PRIMARY KEY (id_product),
---     CONSTRAINT FK_Prod_Cat     FOREIGN KEY (category_number)
---     REFERENCES Category(category_number)
---     ON UPDATE CASCADE
---     ON DELETE NO ACTION
---     );
+CREATE TABLE Product (
+    id_product      INT           NOT NULL AUTO_INCREMENT,
+    category_number INT           NOT NULL,
+    product_name    VARCHAR(50)   NOT NULL,
+    manufacturer    VARCHAR(50)   NOT NULL,
+    characteristics VARCHAR(100)  NOT NULL,
+    CONSTRAINT PK_Product      PRIMARY KEY (id_product),
+    CONSTRAINT FK_Prod_Cat     FOREIGN KEY (category_number)
+        REFERENCES Category(category_number)
+        ON UPDATE CASCADE
+        ON DELETE NO ACTION
+    );
+
+CREATE TABLE Store_Product (
+    UPC                 VARCHAR(12)    NOT NULL,
+    UPC_prom            VARCHAR(12)    NULL,
+    id_product          INT            NOT NULL,
+    selling_price       DECIMAL(13, 4) NOT NULL CHECK (selling_price >= 0),
+    products_number     INT            NOT NULL CHECK (products_number >= 0),
+    promotional_product BOOLEAN        NOT NULL DEFAULT FALSE,
+    CONSTRAINT PK_StoreProduct  PRIMARY KEY (UPC),
+    CONSTRAINT FK_SP_Prom       FOREIGN KEY (UPC_prom)
+        REFERENCES Store_Product(UPC)
+        ON UPDATE CASCADE
+        ON DELETE SET NULL,
+
+    CONSTRAINT FK_SP_Product    FOREIGN KEY (id_product)
+        REFERENCES Product(id_product)
+        ON UPDATE CASCADE
+        ON DELETE NO ACTION
+    );
 --
--- CREATE TABLE IF NOT EXISTS Store_Product (
---     UPC                 VARCHAR(12)    NOT NULL,
---     UPC_prom            VARCHAR(12)    NULL,
---     id_product          INT            NOT NULL,
---     selling_price       DECIMAL(13, 4) NOT NULL CHECK (selling_price >= 0),
---     products_number     INT            NOT NULL CHECK (products_number >= 0),
---     promotional_product BOOLEAN        NOT NULL DEFAULT FALSE,
---     CONSTRAINT PK_StoreProduct  PRIMARY KEY (UPC),
---     CONSTRAINT FK_SP_Prom       FOREIGN KEY (UPC_prom)
---     REFERENCES Store_Product(UPC)
---     ON UPDATE CASCADE
---     ON DELETE SET NULL,
---     CONSTRAINT FK_SP_Product    FOREIGN KEY (id_product)
---     REFERENCES Product(id_product)
---     ON UPDATE CASCADE
---     ON DELETE NO ACTION
---     );
---
--- CREATE TABLE IF NOT EXISTS Employee (
+-- CREATE TABLE Employee (
 --     id_employee      VARCHAR(10)    NOT NULL,
 --     empl_surname     VARCHAR(50)    NOT NULL,
 --     empl_name        VARCHAR(50)    NOT NULL,
@@ -54,7 +61,7 @@ CREATE TABLE Category (
 --     CONSTRAINT CHK_Emp_Age CHECK (DATEDIFF('YEAR', date_of_birth, CURRENT_DATE) >= 18)
 --     );
 --
--- CREATE TABLE IF NOT EXISTS Customer_Card (
+-- CREATE TABLE Customer_Card (
 --                                              card_number     VARCHAR(13)    NOT NULL,
 --     cust_surname    VARCHAR(50)    NOT NULL,
 --     cust_name       VARCHAR(50)    NOT NULL,
@@ -67,7 +74,7 @@ CREATE TABLE Category (
 --     CONSTRAINT PK_CustomerCard PRIMARY KEY (card_number)
 --     );
 --
--- CREATE TABLE IF NOT EXISTS "Check" (
+-- CREATE TABLE "Check" (
 --                                        check_number VARCHAR(10)    NOT NULL,
 --     id_employee  VARCHAR(10)    NOT NULL,
 --     card_number  VARCHAR(13)    NULL,
@@ -85,7 +92,7 @@ CREATE TABLE Category (
 --     ON DELETE NO ACTION
 --     );
 --
--- CREATE TABLE IF NOT EXISTS Sale (
+-- CREATE TABLE Sale (
 --                                     UPC          VARCHAR(12)    NOT NULL,
 --     check_number VARCHAR(10)    NOT NULL,
 --     product_number INT          NOT NULL CHECK (product_number > 0),
