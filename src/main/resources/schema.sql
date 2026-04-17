@@ -1,4 +1,4 @@
---DROP TABLE IF EXISTS Category;
+DROP TABLE IF EXISTS Category;
 DROP TABLE IF EXISTS Product;
 DROP TABLE IF EXISTS Store_Product;
 DROP TABLE IF EXISTS Employee;
@@ -6,7 +6,7 @@ DROP TABLE IF EXISTS Customer_Card;
 DROP TABLE IF EXISTS "Check";
 DROP TABLE IF EXISTS Sale;
 
-CREATE TABLE IF NOT EXISTS Category (
+CREATE TABLE Category (
     category_number INT          NOT NULL AUTO_INCREMENT,
     category_name   VARCHAR(50)  NOT NULL,
     CONSTRAINT PK_Category PRIMARY KEY (category_number)

@@ -23,7 +23,6 @@ INSERT INTO Product (id_product, category_number, product_name, manufacturer, ch
     (13, 7, 'Яблука Голден',      'Україна',    '1кг, першого сорту'),
     (14, 7, 'Банани',             'Еквадор',    '1кг, стиглі');
 
-
 INSERT INTO Store_Product (UPC, UPC_prom, id_product, selling_price, products_number, promotional_product) VALUES
     ('123456789012', NULL, 1,  36.00,  120, FALSE),
     ('123456789013', NULL, 2,  24.00,  80,  FALSE),
