@@ -1,14 +1,21 @@
 package com.krasnovozBek.krasnovozBek.controller;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Map;
+
 @RestController
-@RequestMapping("/api")
-//@CrossOrigin(origins = "http://localhost:3000")
+@RequestMapping("/api/categories")
+@CrossOrigin(origins = "http://localhost:3000")
 public class TestController {
-
-
-    @GetMapping("/test")
-    public String test() {
-        return "hi";
+    private final JdbcTemplate jdbc;
+    public TestController(JdbcTemplate jdbc) {
+        this.jdbc = jdbc;
     }
+    @GetMapping
+    public List<Map<String, Object>> getAll() {
+        return jdbc.queryForList("SELECT * FROM Category");
+    }
+
 }
