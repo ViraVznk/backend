@@ -10,8 +10,32 @@ CREATE TABLE Category (
     category_number INT          NOT NULL AUTO_INCREMENT,
     category_name   VARCHAR(50)  NOT NULL,
     CONSTRAINT PK_Category PRIMARY KEY (category_number)
-    );
+);
 
+DROP TABLE IF EXISTS users;
+
+CREATE TABLE users
+(
+    id       INT  NOT NULL,
+    username VARCHAR(50)  NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    role     VARCHAR(20)  NOT NULL,
+    PRIMARY KEY (id)
+
+);
+
+-- CREATE TABLE IF NOT EXISTS Product (
+--     id_product      INT           NOT NULL AUTO_INCREMENT,
+--     category_number INT           NOT NULL,
+--     product_name    VARCHAR(50)   NOT NULL,
+--     manufacturer    VARCHAR(50)   NOT NULL,
+--     characteristics VARCHAR(100)  NOT NULL,
+--     CONSTRAINT PK_Product      PRIMARY KEY (id_product),
+--     CONSTRAINT FK_Prod_Cat     FOREIGN KEY (category_number)
+--     REFERENCES Category(category_number)
+--     ON UPDATE CASCADE
+--     ON DELETE NO ACTION
+--     );
 CREATE TABLE Product (
     id_product      INT           NOT NULL AUTO_INCREMENT,
     category_number INT           NOT NULL,

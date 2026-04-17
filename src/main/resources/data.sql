@@ -1,11 +1,15 @@
-INSERT INTO Category (category_number, category_name) VALUES
-    (1, 'Молочні продукти'),
-    (2, 'Хлібобулочні вироби'),
-    (3, 'М''ясо та риба'),
-    (4, 'Напої'),
-    (5, 'Кондитерські вироби'),
-    (6, 'Заморожені продукти'),
-    (7, 'Фрукти та овочі');
+INSERT INTO Category (category_number, category_name)
+VALUES (1, 'Молочні продукти'),
+       (2, 'Хлібобулочні вироби'),
+       (3, 'М''ясо та риба'),
+       (4, 'Напої'),
+       (5, 'Кондитерські вироби'),
+       (6, 'Заморожені продукти'),
+       (7, 'Фрукти та овочі');
+
+INSERT INTO users (id, username, password, role)
+VALUES (1,'manager', '$2a$10$8l00jJlHXb9lHx.NQnIgbO6ngDOiNfDvENYVx4vf2lofza4PTKZqS', 'MANAGER'),
+       (2,'cashier', '$2a$10$8l00jJlHXb9lHx.NQnIgbO6ngDOiNfDvENYVx4vf2lofza4PTKZqS', 'CASHIER');
 
 INSERT INTO Product (id_product, category_number, product_name, manufacturer, characteristics) VALUES
     (1,  1, 'Молоко 2.5%',        'Галичина',   '1л, пастеризоване'),
