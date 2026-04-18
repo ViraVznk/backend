@@ -1,9 +1,11 @@
 package com.krasnovozBek.krasnovozBek.service;
+
 import com.krasnovozBek.krasnovozBek.dto.LoginRequest;
 import com.krasnovozBek.krasnovozBek.domain.User;
 import com.krasnovozBek.krasnovozBek.dao.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
 import java.util.Map;
 
 @Service
@@ -19,16 +21,13 @@ public class AuthService {
         this.repo = repo;
         this.encoder = encoder;
         this.jwtService = jwtService;
-
     }
 
     public Map<String, String> login(LoginRequest request) {
-
-        User user = repo.findByUsername(request.username)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+        User user = repo.findByUsername(request.username).orElseThrow(() -> new RuntimeException("Користувача не знайдено"));
 
         if (!encoder.matches(request.password, user.getPassword())) {
-            throw new RuntimeException("Wrong password");
+            throw new RuntimeException("Невірний пароль");
         }
 
         String token = jwtService.generateToken(user);
@@ -38,6 +37,4 @@ public class AuthService {
                 "role", user.getRole()
         );
     }
-
-
 }

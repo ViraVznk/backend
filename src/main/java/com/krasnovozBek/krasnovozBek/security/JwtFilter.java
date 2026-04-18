@@ -1,4 +1,5 @@
 package com.krasnovozBek.krasnovozBek.security;
+
 import com.krasnovozBek.krasnovozBek.domain.User;
 import com.krasnovozBek.krasnovozBek.dao.UserRepository;
 import com.krasnovozBek.krasnovozBek.service.JwtService;
@@ -12,6 +13,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+
 import java.io.IOException;
 import java.util.List;
 
