@@ -2,10 +2,8 @@ package com.krasnovozBek.krasnovozBek.dao.impl;
 
 import com.krasnovozBek.krasnovozBek.dao.CategoryDao;
 import com.krasnovozBek.krasnovozBek.domain.Category;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
@@ -43,9 +41,10 @@ public class CategoryDaoImpl implements CategoryDao {
     }
 
     @Override
-    public List<Category> find() {
+    public List<Category> selectAllCategories() {
         return jdbcTemplate.query("SELECT * FROM Category", new CategoryRowMapper());
     }
+
 
     private class CategoryRowMapper implements RowMapper<Category> {
 
