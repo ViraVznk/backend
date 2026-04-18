@@ -36,7 +36,7 @@ CREATE TABLE users
 --     ON DELETE NO ACTION
 --     );
 CREATE TABLE Product (
-    id_product      INT           NOT NULL AUTO_INCREMENT,
+    id_product      INT           NOT NULL,
     category_number INT           NOT NULL,
     product_name    VARCHAR(50)   NOT NULL,
     manufacturer    VARCHAR(50)   NOT NULL,
