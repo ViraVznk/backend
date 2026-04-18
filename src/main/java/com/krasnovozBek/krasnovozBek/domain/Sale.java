@@ -5,17 +5,17 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Product {
+public class Sale {
 
-    private Integer id_product;
-    private Integer category_number;
-
-    private String product_name;
-    private String manufacturer;
-    private String characteristics;
+    private String upc;
+    private String check_number;
+    private Integer product_number;
+    private BigDecimal selling_price;
 
 }
