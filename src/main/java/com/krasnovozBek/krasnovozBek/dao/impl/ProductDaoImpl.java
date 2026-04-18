@@ -35,7 +35,7 @@ public class ProductDaoImpl implements ProductDao {
     @Override
     public void update(Product product) {
         jdbcTemplate.update(
-                "UPDATE Product SET id_product = ? category_number=?, product_name=?, manufacturer=?, characteristics=? WHERE id_product=?",
+                "UPDATE Product SET id_product=?, category_number=?, product_name=?, manufacturer=?, characteristics=? WHERE id_product=?",
                 product.getId_product(),
                 product.getCategory_number(),
                 product.getProduct_name(),
@@ -43,8 +43,8 @@ public class ProductDaoImpl implements ProductDao {
                 product.getCharacteristics(),
                 product.getId_product()
         );
-
     }
+
 
     @Override
     public void delete(Integer productId) {
