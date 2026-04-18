@@ -10,7 +10,9 @@ VALUES (1, 'Молочні продукти'),
 INSERT INTO users (id, username, password, role)
 VALUES (1, 'manager', '$2a$10$8l00jJlHXb9lHx.NQnIgbO6ngDOiNfDvENYVx4vf2lofza4PTKZqS', 'MANAGER'),
        (2, 'cashier', '$2a$10$8l00jJlHXb9lHx.NQnIgbO6ngDOiNfDvENYVx4vf2lofza4PTKZqS', 'CASHIER'),
-       (3, 'www', '$2a$12$sxla15GOtcCsUSTHLvizru6CPPEOY.daqtY.X6XqolGuYvER2tsbi', 'CASHIER');
+       (3, 'www', '$2a$12$sxla15GOtcCsUSTHLvizru6CPPEOY.daqtY.X6XqolGuYvER2tsbi', 'CASHIER'),
+       (4, 'kkk', '$2a$12$sxla15GOtcCsUSTHLvizru6CPPEOY.daqtY.X6XqolGuYvER2tsbi', 'MANAGER');
+;
 
 INSERT INTO Product (id_product, category_number, product_name, manufacturer, characteristics)
 VALUES (1, 1, 'Молоко 2.5%', 'Галичина', '1л, пастеризоване'),
