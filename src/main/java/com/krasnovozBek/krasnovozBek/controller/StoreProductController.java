@@ -1,6 +1,7 @@
 package com.krasnovozBek.krasnovozBek.controller;
 
 import com.krasnovozBek.krasnovozBek.dao.StoreProductDao;
+import com.krasnovozBek.krasnovozBek.domain.Product;
 import com.krasnovozBek.krasnovozBek.domain.StoreProduct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -58,11 +59,9 @@ public class StoreProductController {
     }
 
     @GetMapping("/api/store-products/{upc}")
-    public ResponseEntity<?> getByUpc(@PathVariable String upc) {
+    public List<StoreProduct> getByUpc(@PathVariable String upc) {
         log.info("finding store-product by upc {}", upc);
-        return storeProductDao.findByUpc(upc)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        return storeProductDao.findByUpc(upc);
     }
 
     @PostMapping("/api/store-products")

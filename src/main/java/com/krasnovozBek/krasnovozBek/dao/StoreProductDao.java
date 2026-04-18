@@ -19,7 +19,7 @@ public interface StoreProductDao {
     List<StoreProduct> findAllPromSortByQuantity();
     List<StoreProduct> findAllPromSortByName();
 
-    Optional<StoreProduct> findByUpc(String upc);
+    List<StoreProduct> findByUpc(String upc);
 
 
 }

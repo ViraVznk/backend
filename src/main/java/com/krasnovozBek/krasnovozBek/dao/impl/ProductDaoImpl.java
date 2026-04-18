@@ -54,7 +54,7 @@ public class ProductDaoImpl implements ProductDao {
     @Override
     public List<Product> findAllSortByName() {
         return jdbcTemplate.query(
-                "SELECT * FROM Product ORDER BY product_name",
+                "SELECT * FROM Product p JOIN Category c ON p.category_number = c.category_number ORDER BY product_name",
                 new ProductRowMapper()
         );
     }
@@ -69,13 +69,13 @@ public class ProductDaoImpl implements ProductDao {
     }
 
     @Override
-    public Optional<Product> findByName(String productName) {
-        List<Product> result = jdbcTemplate.query(
-                "SELECT * FROM Product WHERE product_name=?",
+    public List<Product> findByName(String productName) {
+        return jdbcTemplate.query(
+                "SELECT * FROM Product WHERE LOWER(product_name) LIKE LOWER(CONCAT('%', ?, '%'))",
                 new ProductRowMapper(),
                 productName
         );
-        return result.stream().findFirst();
+
     }
 
     private static final class ProductRowMapper implements RowMapper<Product> {

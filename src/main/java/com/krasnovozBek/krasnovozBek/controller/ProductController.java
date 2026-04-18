@@ -12,6 +12,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
+@RequestMapping("/api/products")
 @CrossOrigin(origins = {"http://localhost:3000", "http://127.0.0.1:3000"})
 public class ProductController {
 
@@ -23,13 +24,24 @@ public class ProductController {
         this.productDao = productDao;
     }
 
-    @GetMapping("/api/products")
+    @GetMapping
     public List<Product> getAllProducts() {
         log.info("in products");
         return productDao.findAllSortByName();
     }
 
-    @PostMapping("/api/products")
+    @GetMapping("/bycategory/{categoryId}")
+    public List<Product> getProductsByCategory(@PathVariable int categoryId) {
+        log.info("in products by category {}", categoryId);
+        return productDao.findByCategorySortByName(categoryId);
+    }
+
+    @GetMapping("/search")
+    public List<Product> getByName(@RequestParam String name) {
+        return productDao.findByName(name);
+    }
+
+    @PostMapping
     public ResponseEntity<String> create(@RequestBody Product product) {
         log.info("creating product {}", product.getProduct_name());
         try {
@@ -41,7 +53,7 @@ public class ProductController {
         }
     }
 
-    @PutMapping("/api/products/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<String> update(@PathVariable int id, @RequestBody Product product) {
         log.info("updating product {}", id);
         try {
@@ -53,7 +65,7 @@ public class ProductController {
         }
     }
 
-    @DeleteMapping("/api/products/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable int id) {
         log.info("deleting product {}", id);
         try {

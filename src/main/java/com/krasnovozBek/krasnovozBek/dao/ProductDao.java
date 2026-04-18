@@ -15,6 +15,6 @@ public interface ProductDao {
     List<Product> findAllSortByName();
     List<Product> findByCategorySortByName(Integer categoryNumber);
 
-    Optional<Product> findByName(String productName);
+    List<Product> findByName(String productName);
 
 }

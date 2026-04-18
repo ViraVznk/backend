@@ -1,6 +1,7 @@
 package com.krasnovozBek.krasnovozBek.dao.impl;
 
 import com.krasnovozBek.krasnovozBek.dao.StoreProductDao;
+import com.krasnovozBek.krasnovozBek.domain.Check;
 import com.krasnovozBek.krasnovozBek.domain.StoreProduct;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -14,6 +15,10 @@ import java.util.Optional;
 
 @Repository
 public class StoreProductDaoImpl implements StoreProductDao {
+
+
+    String sql1 = "Select" +
+            "From Check ch JOIN sales";
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -94,13 +99,12 @@ public class StoreProductDaoImpl implements StoreProductDao {
     }
 
     @Override
-    public Optional<StoreProduct> findByUpc(String upc) {
-        List<StoreProduct> result = jdbcTemplate.query(
+    public List<StoreProduct> findByUpc(String upc) {
+        return jdbcTemplate.query(
                 "SELECT * FROM Store_Product WHERE UPC=?",
                 new StoreProductRowMapper(),
                 upc
         );
-        return result.stream().findFirst();
     }
 
     private static final class StoreProductRowMapper implements RowMapper<StoreProduct> {
