@@ -40,27 +40,21 @@ public class CheckDaoImpl implements CheckDao {
     @Override
     public List<Check> findAllByPeriodByEmployee(String idEmployee, LocalDateTime from, LocalDateTime to) {
         String sql = """
-            SELECT DISTINCT * FROM "Check" c
-            JOIN Sale s        ON c.check_number = s.check_number
-            JOIN Store_Product sp ON s.UPC = sp.UPC
-            JOIN Product p     ON sp.id_product = p.id_product
-            WHERE c.id_employee = ?
-              AND c.print_date BETWEEN ? AND ?
-            ORDER BY c.print_date
-            """;
+        SELECT * FROM "Check" c
+        WHERE c.id_employee = ?
+          AND c.print_date BETWEEN ? AND ?
+        ORDER BY c.print_date
+        """;
         return jdbcTemplate.query(sql, new CheckRowMapper(), idEmployee, from, to);
     }
 
     @Override
     public List<Check> findAllByPeriod(LocalDateTime from, LocalDateTime to) {
         String sql = """
-            SELECT DISTINCT * FROM "Check" c
-            JOIN Sale s          ON c.check_number = s.check_number
-            JOIN Store_Product sp ON s.UPC = sp.UPC
-            JOIN Product p       ON sp.id_product = p.id_product
-            WHERE c.print_date BETWEEN ? AND ?
-            ORDER BY c.print_date
-            """;
+        SELECT * FROM "Check" c
+        WHERE c.print_date BETWEEN ? AND ?
+        ORDER BY c.print_date
+        """;
         return jdbcTemplate.query(sql, new CheckRowMapper(), from, to);
     }
 
@@ -90,17 +84,13 @@ public class CheckDaoImpl implements CheckDao {
     @Override
     public Optional<Check> findByNumber(String checkNumber) {
         String sql = """
-            SELECT DISTINCT * FROM "Check" c
-            JOIN Sale s          ON c.check_number = s.check_number
-            JOIN Store_Product sp ON s.UPC = sp.UPC
-            JOIN Product p       ON sp.id_product = p.id_product
-            WHERE c.check_number = ?
-            """;
+        SELECT * FROM "Check" c
+        WHERE c.check_number = ?
+        """;
         return jdbcTemplate.query(sql, new CheckRowMapper(), checkNumber)
                 .stream()
                 .findFirst();
     }
-
     @Override
     public List<Check> findAllByDayByEmployee(String idEmployee, LocalDateTime day) {
         String sql = """
@@ -115,10 +105,10 @@ public class CheckDaoImpl implements CheckDao {
     @Override
     public List<Map<String, Object>> findSalesByCheckNumber(String checkNumber) {
         return jdbcTemplate.queryForList(
-                "SELECT s.UPC, p.product_name, s.product_number, s.selling_price\n" +
-                        "FROM Sale s\n" +
-                        "JOIN Store_Product sp ON s.UPC = sp.UPC OR s.UPC = sp.UPC_prom\n" +
-                        "JOIN Product p ON sp.id_product = p.id_product\n" +
+                "SELECT s.UPC, p.product_name, s.product_number, s.selling_price \n" +
+                        "FROM Sale s " +
+                        "JOIN Store_Product sp ON s.UPC = sp.UPC OR s.UPC = sp.UPC_prom \n" +
+                        "JOIN Product p ON sp.id_product = p.id_product \n" +
                         "WHERE s.check_number = ?",
                 checkNumber);
     }
@@ -136,4 +126,5 @@ public class CheckDaoImpl implements CheckDao {
                     .build();
         }
     }
+
 }

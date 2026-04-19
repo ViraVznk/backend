@@ -76,7 +76,7 @@ public class CustomerCardDaoImpl implements CustomerCardDao {
         return result.stream().findFirst();
     }
 
-    private static final class CustomerCardRowMapper implements RowMapper<CustomerCard> {
+    public static final class CustomerCardRowMapper implements RowMapper<CustomerCard> {
         @Override
         public CustomerCard mapRow(ResultSet rs, int rowNum) throws SQLException {
             return CustomerCard.builder()

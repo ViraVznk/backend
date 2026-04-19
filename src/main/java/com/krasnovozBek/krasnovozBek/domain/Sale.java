@@ -12,7 +12,6 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @Builder
 public class Sale {
-
     private String upc;
     private String check_number;
     private Integer product_number;

@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -19,5 +20,4 @@ public class Check {
     private LocalDateTime print_date;
     private BigDecimal sum_total;
     private BigDecimal vat;
-
 }
