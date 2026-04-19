@@ -22,10 +22,11 @@ public class UserRepository {
             .username(rs.getString("username"))
             .password(rs.getString("password"))
             .role(rs.getString("role"))
+            .idEmployee(rs.getString("id_employee")) // читаємо напряму з users
             .build();
 
     public Optional<User> findByUsername(String username) {
-        String sql = "SELECT id, username, password, role FROM users WHERE username = ?";
+        String sql = "SELECT id, username, password, role, id_employee FROM users WHERE username = ?";
         return jdbc.query(sql, userMapper, username)
                 .stream()
                 .findFirst();

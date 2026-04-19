@@ -6,6 +6,7 @@ import com.krasnovozBek.krasnovozBek.dao.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @Service
@@ -24,7 +25,8 @@ public class AuthService {
     }
 
     public Map<String, String> login(LoginRequest request) {
-        User user = repo.findByUsername(request.username).orElseThrow(() -> new RuntimeException("Користувача не знайдено"));
+        User user = repo.findByUsername(request.username)
+                .orElseThrow(() -> new RuntimeException("Користувача не знайдено"));
 
         if (!encoder.matches(request.password, user.getPassword())) {
             throw new RuntimeException("Невірний пароль");
@@ -32,9 +34,10 @@ public class AuthService {
 
         String token = jwtService.generateToken(user);
 
-        return Map.of(
-                "token", token,
-                "role", user.getRole()
-        );
+        Map<String, String> response = new HashMap<>();
+        response.put("token", token);
+        response.put("role", user.getRole());
+        response.put("id_employee", user.getIdEmployee() != null ? user.getIdEmployee() : "");
+        return response;
     }
 }

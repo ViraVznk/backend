@@ -5,6 +5,7 @@ DROP TABLE IF EXISTS Employee;
 DROP TABLE IF EXISTS Customer_Card;
 DROP TABLE IF EXISTS "Check";
 DROP TABLE IF EXISTS Sale;
+DROP TABLE IF EXISTS users;
 
 CREATE TABLE Category
 (
@@ -13,16 +14,7 @@ CREATE TABLE Category
     CONSTRAINT PK_Category PRIMARY KEY (category_number)
 );
 
-DROP TABLE IF EXISTS users;
 
-CREATE TABLE users
-(
-    id       INT          NOT NULL,
-    username VARCHAR(50)  NOT NULL UNIQUE,
-    password VARCHAR(255) NOT NULL,
-    role     VARCHAR(20)  NOT NULL,
-    PRIMARY KEY (id)
-);
 -- CREATE TABLE IF NOT EXISTS Product (
 --     id_product      INT           NOT NULL AUTO_INCREMENT,
 --     category_number INT           NOT NULL,
@@ -130,3 +122,18 @@ CREATE TABLE Sale (
     ON UPDATE CASCADE
     ON DELETE CASCADE
     );
+
+CREATE TABLE users
+(
+    id       INT          NOT NULL,
+    username VARCHAR(50)  NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    role     VARCHAR(20)  NOT NULL,
+    id_employee VARCHAR(10) NOT NULL,
+    CONSTRAINT PK_users PRIMARY KEY (id),
+    CONSTRAINT FK_User_Employee  FOREIGN KEY (id_employee)
+        REFERENCES Employee(id_employee)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+
+);

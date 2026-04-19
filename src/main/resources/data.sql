@@ -7,12 +7,6 @@ VALUES (1, 'Молочні продукти'),
        (6, 'Заморожені продукти'),
        (7, 'Фрукти та овочі');
 
-INSERT INTO users (id, username, password, role)
-VALUES (1, 'manager', '$2a$10$8l00jJlHXb9lHx.NQnIgbO6ngDOiNfDvENYVx4vf2lofza4PTKZqS', 'MANAGER'),
-       (2, 'cashier', '$2a$10$8l00jJlHXb9lHx.NQnIgbO6ngDOiNfDvENYVx4vf2lofza4PTKZqS', 'CASHIER'),
-       (3, 'www', '$2a$12$sxla15GOtcCsUSTHLvizru6CPPEOY.daqtY.X6XqolGuYvER2tsbi', 'CASHIER'),
-       (4, 'kkk', '$2a$12$sxla15GOtcCsUSTHLvizru6CPPEOY.daqtY.X6XqolGuYvER2tsbi', 'MANAGER');
-;
 
 INSERT INTO Product (id_product, category_number, product_name, manufacturer, characteristics)
 VALUES (1, 1, 'Молоко 2.5%', 'Галичина', '1л, пастеризоване'),
@@ -128,3 +122,10 @@ VALUES
     -- CHK0000010: хліб x2, кефір x1
     ('123456789015', 'CHK0000010', 2, 28.00),
     ('123456789013', 'CHK0000010', 1, 24.00);
+
+INSERT INTO users (id, username, password, role,id_employee)
+VALUES (1, 'manager', '$2a$10$8l00jJlHXb9lHx.NQnIgbO6ngDOiNfDvENYVx4vf2lofza4PTKZqS', 'MANAGER','EMP002'),
+       (2, 'cashier', '$2a$10$8l00jJlHXb9lHx.NQnIgbO6ngDOiNfDvENYVx4vf2lofza4PTKZqS', 'CASHIER','EMP004'),
+       (3, 'Петренко', '$2a$12$sxla15GOtcCsUSTHLvizru6CPPEOY.daqtY.X6XqolGuYvER2tsbi', 'CASHIER','EMP003'),
+       (4, 'Коваленко', '$2a$12$sxla15GOtcCsUSTHLvizru6CPPEOY.daqtY.X6XqolGuYvER2tsbi', 'MANAGER','EMP001');
+;
