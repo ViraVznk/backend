@@ -19,7 +19,8 @@ public interface StoreProductDao {
     List<StoreProduct> findAllPromSortByQuantity();
     List<StoreProduct> findAllPromSortByName();
 
+    List<StoreProduct> findByUpc(String upc);
     List<Map<String, Object>> findByUpcWithDetails(String upc);
-
+    List<Map<String, Object>> findAllWithDetails();
 
 }

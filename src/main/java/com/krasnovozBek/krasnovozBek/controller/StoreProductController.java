@@ -65,6 +65,18 @@ public class StoreProductController {
         return storeProductDao.findByUpcWithDetails(upc);
     }
 
+    @GetMapping("/api/store-products/by-upc-def")
+    public List<StoreProduct> getByUpcDefault(@RequestParam String upc) {
+        log.info("finding store-product by upc {}", upc);
+        return storeProductDao.findByUpc(upc);
+    }
+
+    @GetMapping("/api/store-products/all-with-det")
+    public List<Map<String, Object>>getByUpcDefault() {
+        log.info("finding store-product by upc {}");
+        return storeProductDao.findAllWithDetails();
+    }
+
     @PostMapping("/api/store-products")
     public ResponseEntity<String> create(@RequestBody StoreProduct storeProduct) {
         log.info("creating store-product {}", storeProduct.getUpc());

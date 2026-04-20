@@ -105,6 +105,27 @@ public class StoreProductDaoImpl implements StoreProductDao {
         );
     }
 
+    @Override
+    public List<Map<String, Object>> findAllWithDetails() {
+        return jdbcTemplate.queryForList(
+                "SELECT sp.UPC, sp.selling_price, sp.products_number, p.product_name " +
+                        "FROM Store_Product sp JOIN Product p ON sp.id_product = p.id_product "
+        );
+    }
+
+    @Override
+    public List<StoreProduct> findByUpc(String upc) {
+        return jdbcTemplate.query(
+                "SELECT * " +
+                        "FROM Store_Product " +
+                        "WHERE UPC = ? ",
+                new StoreProductRowMapper(),
+                upc
+        );
+    }
+
+
+
     private static final class StoreProductRowMapper implements RowMapper<StoreProduct> {
         @Override
         public StoreProduct mapRow(ResultSet rs, int rowNum) throws SQLException {
