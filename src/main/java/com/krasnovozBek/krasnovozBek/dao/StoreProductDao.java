@@ -3,7 +3,6 @@ package com.krasnovozBek.krasnovozBek.dao;
 import com.krasnovozBek.krasnovozBek.domain.StoreProduct;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface StoreProductDao {
     void create(StoreProduct storeProduct);

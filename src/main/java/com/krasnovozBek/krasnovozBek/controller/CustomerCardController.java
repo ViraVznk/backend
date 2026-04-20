@@ -25,21 +25,18 @@ public class CustomerCardController {
 
     }
 
-    // GET /api/customer-cards
     @GetMapping
     public List<CustomerCard> getAllSortBySurname() {
         log.info("getting all customer cards");
         return customerCardDao.findAllSortBySurname();
     }
 
-    // GET /api/customer-cards/with-percent
-    @GetMapping("/with-percent")
+      @GetMapping("/with-percent")
     public List<CustomerCard> getAllWithPercent() {
         log.info("getting customer cards with percent");
         return customerCardDao.findHasPercentSortBySurname(0);
     }
 
-    // GET /api/customer-cards/by-surname?surname=...
     @GetMapping("/by-surname")
     public ResponseEntity<CustomerCard> getBySurname(@RequestParam String surname) {
         log.info("getting customer card by surname {}", surname);
@@ -48,7 +45,6 @@ public class CustomerCardController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // GET /api/customer-cards/{cardNumber}  — поки не має в dao але корисно мати
     @GetMapping("/{cardNumber}")
     public ResponseEntity<CustomerCard> getByCardNumber(@PathVariable String cardNumber) {
         log.info("getting customer card {}", cardNumber);
@@ -57,7 +53,6 @@ public class CustomerCardController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // POST /api/customer-cards
     @PostMapping
     public ResponseEntity<String> create(@RequestBody CustomerCard customerCard) {
         log.info("creating customer card {}", customerCard.getCard_number());
