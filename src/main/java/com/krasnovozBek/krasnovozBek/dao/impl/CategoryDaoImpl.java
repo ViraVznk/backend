@@ -29,8 +29,8 @@ public class CategoryDaoImpl implements CategoryDao {
 
     @Override
     public void update(int category_number, Category category) {
-        jdbcTemplate.update("UPDATE Category SET category_number = ?, category_name = ? WHERE category_number = ?",
-                category.getCategory_number(), category.getCategory_name(), category_number
+        jdbcTemplate.update("UPDATE Category SET category_name = ? WHERE category_number = ?",
+                category.getCategory_name(), category_number
         );
 
     }

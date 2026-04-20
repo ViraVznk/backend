@@ -10,29 +10,16 @@ DROP TABLE IF EXISTS users;
 CREATE TABLE Category
 (
     category_number INT         NOT NULL ,
-    category_name   VARCHAR(50) NOT NULL,
+    category_name   VARCHAR(50) NOT NULL CHECK (category_name <> ''),
     CONSTRAINT PK_Category PRIMARY KEY (category_number)
 );
 
-
--- CREATE TABLE IF NOT EXISTS Product (
---     id_product      INT           NOT NULL AUTO_INCREMENT,
---     category_number INT           NOT NULL,
---     product_name    VARCHAR(50)   NOT NULL,
---     manufacturer    VARCHAR(50)   NOT NULL,
---     characteristics VARCHAR(100)  NOT NULL,
---     CONSTRAINT PK_Product      PRIMARY KEY (id_product),
---     CONSTRAINT FK_Prod_Cat     FOREIGN KEY (category_number)
---     REFERENCES Category(category_number)
---     ON UPDATE CASCADE
---     ON DELETE NO ACTION
---     );
 CREATE TABLE Product (
     id_product      INT           NOT NULL,
     category_number INT           NOT NULL,
-    product_name    VARCHAR(50)   NOT NULL,
-    manufacturer    VARCHAR(50)   NOT NULL,
-    characteristics VARCHAR(100)  NOT NULL,
+    product_name    VARCHAR(50)   NOT NULL CHECK (product_name <> ''),
+    manufacturer    VARCHAR(50)   NOT NULL CHECK ( manufacturer <> ''),
+    characteristics VARCHAR(100)  NOT NULL CHECK (characteristics <> ''),
     CONSTRAINT PK_Product      PRIMARY KEY (id_product),
     CONSTRAINT FK_Prod_Cat     FOREIGN KEY (category_number)
         REFERENCES Category(category_number)
@@ -61,17 +48,17 @@ CREATE TABLE Store_Product (
 
 CREATE TABLE Employee (
     id_employee      VARCHAR(10)    NOT NULL,
-    empl_surname     VARCHAR(50)    NOT NULL,
-    empl_name        VARCHAR(50)    NOT NULL,
+    empl_surname     VARCHAR(50)    NOT NULL CHECK (empl_surname <> ''),
+    empl_name        VARCHAR(50)    NOT NULL CHECK (empl_name <> ''),
     empl_patronymic  VARCHAR(50)    NULL,
     empl_role        VARCHAR(10)    NOT NULL CHECK (empl_role IN ('Manager', 'Cashier')),
     salary           DECIMAL(13, 4) NOT NULL CHECK (salary >= 0),
     date_of_birth    DATE           NOT NULL,
     date_of_start    DATE           NOT NULL,
-    phone_number     VARCHAR(13)    NOT NULL,
-    city             VARCHAR(50)    NOT NULL,
-    street           VARCHAR(50)    NOT NULL,
-    zip_code         VARCHAR(9)     NOT NULL,
+    phone_number     VARCHAR(13)    NOT NULL CHECK (phone_number <> ''),
+    city             VARCHAR(50)    NOT NULL CHECK (city <> ''),
+    street           VARCHAR(50)    NOT NULL CHECK (street <> ''),
+    zip_code         VARCHAR(9)     NOT NULL CHECK (zip_code <> ''),
     CONSTRAINT PK_Employee PRIMARY KEY (id_employee),
     CONSTRAINT CHK_Emp_Age CHECK (DATEDIFF('YEAR', date_of_birth, CURRENT_DATE) >= 18)
     );

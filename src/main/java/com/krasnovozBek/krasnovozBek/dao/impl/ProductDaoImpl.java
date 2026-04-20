@@ -35,8 +35,7 @@ public class ProductDaoImpl implements ProductDao {
     @Override
     public void update(Product product) {
         jdbcTemplate.update(
-                "UPDATE Product SET id_product=?, category_number=?, product_name=?, manufacturer=?, characteristics=? WHERE id_product=?",
-                product.getId_product(),
+                "UPDATE Product SET category_number=?, product_name=?, manufacturer=?, characteristics=? WHERE id_product=?",
                 product.getCategory_number(),
                 product.getProduct_name(),
                 product.getManufacturer(),
@@ -54,7 +53,7 @@ public class ProductDaoImpl implements ProductDao {
     @Override
     public List<Product> findAllSortByName() {
         return jdbcTemplate.query(
-                "SELECT * FROM Product p JOIN Category c ON p.category_number = c.category_number ORDER BY product_name",
+                "SELECT * FROM Product ORDER BY product_name",
                 new ProductRowMapper()
         );
     }

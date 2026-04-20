@@ -24,23 +24,6 @@ public class ProductController {
         this.productDao = productDao;
     }
 
-    @GetMapping
-    public List<Product> getAllProducts() {
-        log.info("in products");
-        return productDao.findAllSortByName();
-    }
-
-    @GetMapping("/bycategory/{categoryId}")
-    public List<Product> getProductsByCategory(@PathVariable int categoryId) {
-        log.info("in products by category {}", categoryId);
-        return productDao.findByCategorySortByName(categoryId);
-    }
-
-    @GetMapping("/search")
-    public List<Product> getByName(@RequestParam String name) {
-        return productDao.findByName(name);
-    }
-
     @PostMapping
     public ResponseEntity<String> create(@RequestBody Product product) {
         log.info("creating product {}", product.getProduct_name());
@@ -49,7 +32,7 @@ public class ProductController {
             return ResponseEntity.ok().build();
         } catch (DataIntegrityViolationException e) {
             return ResponseEntity.badRequest()
-                    .body("Помилка: перевірте чи існує вказана категорія");
+                    .body("Помилка: перевірте правильність вводу");
         }
     }
 
@@ -75,5 +58,22 @@ public class ProductController {
             return ResponseEntity.badRequest()
                     .body("Неможливо видалити товар — він використовується в чеках");
         }
+    }
+
+    @GetMapping
+    public List<Product> getAllProducts() {
+        log.info("in products");
+        return productDao.findAllSortByName();
+    }
+
+    @GetMapping("/bycategory/{categoryId}")
+    public List<Product> getProductsByCategory(@PathVariable int categoryId) {
+        log.info("in products by category {}", categoryId);
+        return productDao.findByCategorySortByName(categoryId);
+    }
+
+    @GetMapping("/search")
+    public List<Product> getByName(@RequestParam String name) {
+        return productDao.findByName(name);
     }
 }

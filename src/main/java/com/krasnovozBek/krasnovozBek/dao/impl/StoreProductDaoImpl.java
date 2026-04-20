@@ -124,8 +124,6 @@ public class StoreProductDaoImpl implements StoreProductDao {
         );
     }
 
-
-
     private static final class StoreProductRowMapper implements RowMapper<StoreProduct> {
         @Override
         public StoreProduct mapRow(ResultSet rs, int rowNum) throws SQLException {
