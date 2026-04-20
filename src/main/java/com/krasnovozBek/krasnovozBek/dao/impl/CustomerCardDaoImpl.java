@@ -59,21 +59,21 @@ public class CustomerCardDaoImpl implements CustomerCardDao {
     }
 
     @Override
-    public List<CustomerCard> findHasPercentSortBySurname(Integer percent) {
+    public List<CustomerCard> findByPercentSortBySurname(Integer p) {
         return jdbcTemplate.query(
-                "SELECT * FROM Customer_Card WHERE percent > 0 ORDER BY cust_surname",
-                new CustomerCardRowMapper()
+                "SELECT * FROM Customer_Card WHERE percent = ? ORDER BY cust_surname",
+                new CustomerCardRowMapper(),
+                p
         );
     }
 
     @Override
-    public Optional<CustomerCard> findBySurname(String surname) {
-        List<CustomerCard> result = jdbcTemplate.query(
+    public List<CustomerCard> findBySurname(String surname) {
+        return jdbcTemplate.query(
                 "SELECT * FROM Customer_Card WHERE cust_surname=?",
                 new CustomerCardRowMapper(),
                 surname
         );
-        return result.stream().findFirst();
     }
 
     public static final class CustomerCardRowMapper implements RowMapper<CustomerCard> {

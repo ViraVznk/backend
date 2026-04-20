@@ -12,7 +12,7 @@ public interface CustomerCardDao {
     void delete(String cardNumber);
 
     List<CustomerCard> findAllSortBySurname();
-    List<CustomerCard> findHasPercentSortBySurname(Integer percent);
+    List<CustomerCard> findByPercentSortBySurname(Integer percent);
 
-    Optional<CustomerCard> findBySurname(String surname);
+    List<CustomerCard> findBySurname(String surname);
 }

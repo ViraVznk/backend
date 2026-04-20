@@ -63,13 +63,14 @@ public class EmployeeDaoImpl implements EmployeeDao {
     }
 
     @Override
-    public Optional<Employee> findBySurname(String surname) {
-        List<Employee> result = jdbcTemplate.query(
-                "SELECT * FROM Employee WHERE empl_surname=?",
+    public List<Employee> findBySurname(String surname) {
+        return jdbcTemplate.query(
+                """
+                SELECT * FROM Employee WHERE LOWER(empl_surname) = LOWER(?)
+                """,
                 new EmployeeRowMapper(),
                 surname
         );
-        return result.stream().findFirst();
     }
 
     @Override

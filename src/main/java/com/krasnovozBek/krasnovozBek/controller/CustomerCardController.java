@@ -32,26 +32,24 @@ public class CustomerCardController {
     }
 
       @GetMapping("/with-percent")
-    public List<CustomerCard> getAllWithPercent() {
+    public List<CustomerCard> getAllByPercent(@RequestParam int percent) {
         log.info("getting customer cards with percent");
-        return customerCardDao.findHasPercentSortBySurname(0);
+        return customerCardDao.findByPercentSortBySurname(percent);
     }
 
     @GetMapping("/by-surname")
-    public ResponseEntity<CustomerCard> getBySurname(@RequestParam String surname) {
+    public List<CustomerCard> getBySurname(@RequestParam String surname) {
         log.info("getting customer card by surname {}", surname);
-        return customerCardDao.findBySurname(surname)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        return customerCardDao.findBySurname(surname);
     }
 
-    @GetMapping("/{cardNumber}")
-    public ResponseEntity<CustomerCard> getByCardNumber(@PathVariable String cardNumber) {
-        log.info("getting customer card {}", cardNumber);
-        return customerCardDao.findBySurname(cardNumber)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
-    }
+//    @GetMapping("/{cardNumber}")
+//    public ResponseEntity<CustomerCard> getByCardNumber(@PathVariable String cardNumber) {
+//        log.info("getting customer card {}", cardNumber);
+//        return customerCardDao.findBySurname(cardNumber)
+//                .map(ResponseEntity::ok)
+//                .orElse(ResponseEntity.notFound().build());
+//    }
 
     @PostMapping
     public ResponseEntity<String> create(@RequestBody CustomerCard customerCard) {

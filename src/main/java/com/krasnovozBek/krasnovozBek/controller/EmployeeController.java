@@ -76,4 +76,11 @@ public class EmployeeController {
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
+
+    @GetMapping("/api/employees/by-name")
+    public List<Employee> getBySurname(@RequestParam String name) {
+        log.info("getting employee by name");
+        return employeeDao.findBySurname(name);
+    }
+
 }

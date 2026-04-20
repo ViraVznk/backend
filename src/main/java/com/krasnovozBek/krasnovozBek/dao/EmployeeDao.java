@@ -12,6 +12,6 @@ public interface EmployeeDao {
     List<Employee> findAllSortBySurname();
     List<Employee> findAllCashiersSortBySurname();
 
-    Optional<Employee> findBySurname(String surname);
+    List<Employee> findBySurname(String surname);
     Optional<Employee> findById(String idEmployee);
 }
