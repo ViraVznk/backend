@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -58,10 +59,10 @@ public class StoreProductController {
         return storeProductDao.findAllNotPromSortByName();
     }
 
-    @GetMapping("/api/store-products/{upc}")
-    public List<StoreProduct> getByUpc(@PathVariable String upc) {
+    @GetMapping("/api/store-products/by-upc")
+    public List<Map<String, Object>> getByUpc(@RequestParam String upc) {
         log.info("finding store-product by upc {}", upc);
-        return storeProductDao.findByUpc(upc);
+        return storeProductDao.findByUpcWithDetails(upc);
     }
 
     @PostMapping("/api/store-products")

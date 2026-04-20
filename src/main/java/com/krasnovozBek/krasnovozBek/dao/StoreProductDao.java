@@ -3,6 +3,7 @@ package com.krasnovozBek.krasnovozBek.dao;
 import com.krasnovozBek.krasnovozBek.domain.StoreProduct;
 
 import java.util.List;
+import java.util.Map;
 
 public interface StoreProductDao {
     void create(StoreProduct storeProduct);
@@ -18,7 +19,7 @@ public interface StoreProductDao {
     List<StoreProduct> findAllPromSortByQuantity();
     List<StoreProduct> findAllPromSortByName();
 
-    List<StoreProduct> findByUpc(String upc);
+    List<Map<String, Object>> findByUpcWithDetails(String upc);
 
 
 }

@@ -13,7 +13,7 @@ public class StoreProduct {
     private String upc;
     private String upc_prom;
 
-    private Integer product_id;
+    private Integer id_product;
     private java.math.BigDecimal selling_price;
     private Integer products_number;
     private Boolean promotional;

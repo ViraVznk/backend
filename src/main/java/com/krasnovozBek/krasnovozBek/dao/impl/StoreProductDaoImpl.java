@@ -11,14 +11,11 @@ import org.springframework.stereotype.Repository;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Repository
 public class StoreProductDaoImpl implements StoreProductDao {
-
-
-    String sql1 = "Select" +
-            "From Check ch JOIN sales";
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -30,7 +27,7 @@ public class StoreProductDaoImpl implements StoreProductDao {
     public void create(StoreProduct storeProduct) {
         jdbcTemplate.update(
                 "INSERT INTO Store_Product (UPC, UPC_prom, id_product, selling_price, products_number, promotional_product) VALUES (?,?,?,?,?,?)",
-                storeProduct.getUpc(), storeProduct.getUpc_prom(), storeProduct.getProduct_id(),
+                storeProduct.getUpc(), storeProduct.getUpc_prom(), storeProduct.getId_product(),
                 storeProduct.getSelling_price(), storeProduct.getProducts_number(), storeProduct.getPromotional()
         );
     }
@@ -39,7 +36,7 @@ public class StoreProductDaoImpl implements StoreProductDao {
     public void update(StoreProduct storeProduct) {
         jdbcTemplate.update(
                 "UPDATE Store_Product SET UPC_prom=?, id_product=?, selling_price=?, products_number=?, promotional_product=? WHERE UPC=?",
-                storeProduct.getUpc_prom(), storeProduct.getProduct_id(),
+                storeProduct.getUpc_prom(), storeProduct.getId_product(),
                 storeProduct.getSelling_price(), storeProduct.getProducts_number(), storeProduct.getPromotional(),
                 storeProduct.getUpc()
         );
@@ -69,7 +66,7 @@ public class StoreProductDaoImpl implements StoreProductDao {
     @Override
     public List<StoreProduct> findAllNotPromSortByQuantity() {
         return jdbcTemplate.query(
-                "SELECT * FROM Store_Product WHERE promotional_product=true ORDER BY products_number",
+                "SELECT * FROM Store_Product WHERE promotional_product=false ORDER BY products_number",
                 new StoreProductRowMapper()
         );
     }
@@ -77,7 +74,7 @@ public class StoreProductDaoImpl implements StoreProductDao {
     @Override
     public List<StoreProduct> findAllNotPromSortByName() {
         return jdbcTemplate.query(
-                "SELECT sp.* FROM Store_Product sp JOIN Product p ON sp.id_product=p.id_product WHERE sp.promotional_product=true ORDER BY p.product_name",
+                "SELECT sp.* FROM Store_Product sp JOIN Product p ON sp.id_product=p.id_product WHERE sp.promotional_product=false ORDER BY p.product_name",
                 new StoreProductRowMapper()
         );
     }
@@ -85,7 +82,7 @@ public class StoreProductDaoImpl implements StoreProductDao {
     @Override
     public List<StoreProduct> findAllPromSortByQuantity() {
         return jdbcTemplate.query(
-                "SELECT * FROM Store_Product WHERE promotional_product=false ORDER BY products_number",
+                "SELECT * FROM Store_Product WHERE promotional_product=true ORDER BY products_number",
                 new StoreProductRowMapper()
         );
     }
@@ -93,16 +90,17 @@ public class StoreProductDaoImpl implements StoreProductDao {
     @Override
     public List<StoreProduct> findAllPromSortByName() {
         return jdbcTemplate.query(
-                "SELECT sp.* FROM Store_Product sp JOIN Product p ON sp.id_product=p.id_product WHERE sp.promotional_product=false ORDER BY p.product_name",
+                "SELECT sp.* FROM Store_Product sp JOIN Product p ON sp.id_product=p.id_product WHERE sp.promotional_product=true ORDER BY p.product_name",
                 new StoreProductRowMapper()
         );
     }
 
     @Override
-    public List<StoreProduct> findByUpc(String upc) {
-        return jdbcTemplate.query(
-                "SELECT * FROM Store_Product WHERE UPC=?",
-                new StoreProductRowMapper(),
+    public List<Map<String, Object>> findByUpcWithDetails(String upc) {
+        return jdbcTemplate.queryForList(
+                "SELECT sp.UPC, sp.selling_price, sp.products_number, p.product_name, p.characteristics " +
+                        "FROM Store_Product sp JOIN Product p ON sp.id_product = p.id_product " +
+                        "WHERE sp.UPC = ? ",
                 upc
         );
     }
@@ -113,7 +111,7 @@ public class StoreProductDaoImpl implements StoreProductDao {
             return StoreProduct.builder()
                     .upc(rs.getString("UPC"))
                     .upc_prom(rs.getString("UPC_prom"))
-                    .product_id(rs.getInt("id_product"))
+                    .id_product(rs.getInt("id_product"))
                     .selling_price(rs.getBigDecimal("selling_price"))
                     .products_number(rs.getInt("products_number"))
                     .promotional(rs.getBoolean("promotional_product"))
