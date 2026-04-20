@@ -112,8 +112,15 @@ public class CheckDaoImpl implements CheckDao {
                         "WHERE s.check_number = ?",
                 checkNumber);
     }
+    @Override
+    public List<Check> findAll (){
+        String sql = """
+                SELECT * FROM "Check" c
+                """;
+        return jdbcTemplate.query(sql, new CheckRowMapper());
+    }
 
-    private static final class CheckRowMapper implements RowMapper<Check> {
+    public static final class CheckRowMapper implements RowMapper<Check> {
         @Override
         public Check mapRow(ResultSet rs, int rowNum) throws SQLException {
             return Check.builder()

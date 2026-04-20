@@ -32,29 +32,37 @@ public class VozController {
                 FROM Customer_Card cc
                 JOIN "Check" ch ON cc.card_number = ch.card_number
                 JOIN Sale s ON s.check_number = ch.check_number
-                GROUP BY cc.card_number, cc.cust_surname, cc.cust_name
-                ORDER BY products_bought DESC LIMIT 1;
+                GROUP BY cc.card_number, cc.cust_surname, cc.cust_name 
+                HAVING  SUM(s.product_number) =
+                SELECT MAX(pb)
+                FROM (SELECT SUM(s2.product_number) AS pb
+                FROM Customer_Card cc2
+                JOIN "Check" ch2 ON cc2.card_number = ch2.card_number
+                JOIN Sale s2 ON s2.check_number = ch2.check_number
+                GROUP BY cc2.card_number
+                )
+                ORDER BY products_bought DESC
                 
         """;
         return jdbc.queryForList(sql);
     }
-    //камтомер в яких в кожному чеку є хоча б один продукт категорії
+
     @GetMapping("/sql2/{category_number}")
     public List<CustomerCard> sql2Vira(@PathVariable int category_number) {
         log.info("in sql 2 by vira");
 
         return jdbc.query(
                 "SELECT * " +
-                        "FROM Customer_Card cc " +
-                        "WHERE NOT EXISTS ("+
+                "FROM Customer_Card cc " +
+                "WHERE NOT EXISTS ("+
                         "SELECT 1 FROM \"Check\" ch "+
                         "WHERE cc.card_number = ch.card_number "+
                         "AND NOT EXISTS ("+
-                        "SELECT 1 "+
-                        "FROM Sale s JOIN Store_Product sp ON s.upc = sp.upc "+
-                        "JOIN Product p ON sp.id_product = p.id_product "+
-                        "WHERE s.check_number = ch.check_number "+
-                        "AND p.category_number = ?))",
+                                "SELECT 1 "+
+                                "FROM Sale s JOIN Store_Product sp ON s.upc = sp.upc "+
+                                "JOIN Product p ON sp.id_product = p.id_product "+
+                                "WHERE s.check_number = ch.check_number "+
+                                "AND p.category_number = ?))",
                 new CustomerCardDaoImpl.CustomerCardRowMapper(),
                 category_number);
     }

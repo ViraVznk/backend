@@ -39,6 +39,11 @@ public class CheckController {
         return checkDao.findAllByPeriod(from, to);
     }
 
+    @GetMapping("/all")
+    public List<Check> getAll() {
+        return checkDao.findAll();
+    }
+
     @GetMapping("/employee/{id}")
     public List<Check> getAllByEmployeeAndPeriod(
             @PathVariable String id,

@@ -1,13 +1,7 @@
 package com.krasnovozBek.krasnovozBek.controller;
 
 import com.krasnovozBek.krasnovozBek.dao.impl.CheckDaoImpl;
-import com.krasnovozBek.krasnovozBek.dao.impl.CustomerCardDaoImpl;
-import com.krasnovozBek.krasnovozBek.dao.impl.EmployeeDaoImpl;
 import com.krasnovozBek.krasnovozBek.domain.Check;
-import com.krasnovozBek.krasnovozBek.domain.CustomerCard;
-import com.krasnovozBek.krasnovozBek.domain.Employee;
-
-import com.krasnovozBek.krasnovozBek.domain.Product;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
@@ -42,7 +36,7 @@ public class KrasnoController {
 
 
     @GetMapping("/sql2/{category_number}")
-    public List<Check> sql2Anna(@PathVariable String category_number) {
+    public List<Check> sql2Anna(@PathVariable int category_number) {
         log.info("in sql 2 by anna");
         return jdbc.query(
         "SELECT * " +
@@ -60,14 +54,5 @@ public class KrasnoController {
                 category_number);
     }
 
-//    "" +
-//            "FROM Product p JOIN Store_Product sp ON p.id_product = sp.id_product WHERE UPC IN (" +
-//            "SELECT UPC " +
-//            "FROM Store_Product WHERE product_id IN (" +
-//            "SELECT product_id FROM Product p " +
-//            "WHERE category_number = ? AND product_id IN (" +
-//            "SELECT product_id FROM Store_Product " +
-//            "WHERE UPC NOT IN (SELECT UPC FROM Sale s2 WHERE s.UPC = " +
-//            ")" +
-//            ")",
+
 }

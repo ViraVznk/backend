@@ -15,8 +15,10 @@ public interface CheckDao {
     List<Check> findAllByPeriodByEmployee(String idEmployee, LocalDateTime from, LocalDateTime to);
     List<Check> findAllByDayByEmployee(String idEmployee, LocalDateTime day);
     List<Check> findAllByPeriod(LocalDateTime from, LocalDateTime to);
+    List<Check> findAll();
     BigDecimal getTotalSumByEmployeeAndPeriod(String idEmployee, LocalDateTime from, LocalDateTime to);
     BigDecimal getTotalSumByPeriod(LocalDateTime from, LocalDateTime to);
     Optional<Check> findByNumber(String checkNumber);
     List<Map<String, Object>> findSalesByCheckNumber(String checkNumber);
+
 }
