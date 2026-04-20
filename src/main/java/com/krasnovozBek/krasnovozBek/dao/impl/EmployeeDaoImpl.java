@@ -72,6 +72,16 @@ public class EmployeeDaoImpl implements EmployeeDao {
         return result.stream().findFirst();
     }
 
+    @Override
+    public Optional<Employee> findById(String idEmployee) {
+        List<Employee> result = jdbcTemplate.query(
+                "SELECT * FROM Employee WHERE id_employee=?",
+                new EmployeeRowMapper(),
+                idEmployee
+        );
+        return result.stream().findFirst();
+    }
+
     private static final class EmployeeRowMapper implements RowMapper<Employee> {
         @Override
         public Employee mapRow(ResultSet rs, int rowNum) throws SQLException {

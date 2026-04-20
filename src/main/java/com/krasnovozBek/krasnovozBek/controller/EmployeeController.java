@@ -68,4 +68,12 @@ public class EmployeeController {
                     .body("Неможливо видалити працівника — він прив'язаний до чеків");
         }
     }
+
+    @GetMapping("/api/employees/{id}")
+    public ResponseEntity<Employee> getById(@PathVariable String id) {
+        log.info("getting employee by id {}", id);
+        return employeeDao.findById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
 }
