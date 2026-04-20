@@ -23,8 +23,11 @@ public class SaleDaoImpl implements SaleDao {
                 sale.getUpc(), sale.getCheck_number(),
                 sale.getProduct_number(), sale.getSelling_price()
         );
+        jdbcTemplate.update(
+                "UPDATE Store_Product SET products_number = products_number - ? WHERE UPC = ?",
+                sale.getProduct_number(), sale.getUpc()
+        );
     }
-
     @Override
     public Integer getTotalQuantityByUpcAndPeriod(String upc, LocalDateTime from, LocalDateTime to) {
         String sql = """

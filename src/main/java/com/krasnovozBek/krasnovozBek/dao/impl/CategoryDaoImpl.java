@@ -21,7 +21,7 @@ public class CategoryDaoImpl implements CategoryDao {
 
     @Override
     public void create(Category category) {
-        jdbcTemplate.update("INSERT INTO Category (category_number ,category_name) VALUES (?,?)",
+        jdbcTemplate.update("INSERT INTO Category (category_number ,category_name) VALUES (?,?) ",
                 category.getCategory_number(),
                 category.getCategory_name()
                 );
@@ -42,7 +42,10 @@ public class CategoryDaoImpl implements CategoryDao {
 
     @Override
     public List<Category> selectAllCategories() {
-        return jdbcTemplate.query("SELECT * FROM Category", new CategoryRowMapper());
+        return jdbcTemplate.query(
+                "SELECT * FROM Category ORDER BY LOWER(category_name)",
+                new CategoryRowMapper()
+        );
     }
 
 

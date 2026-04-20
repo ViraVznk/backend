@@ -64,7 +64,7 @@ CREATE TABLE Employee (
     empl_surname     VARCHAR(50)    NOT NULL,
     empl_name        VARCHAR(50)    NOT NULL,
     empl_patronymic  VARCHAR(50)    NULL,
-    empl_role        VARCHAR(10)    NOT NULL,   -- 'Manager' | 'Cashier'
+    empl_role        VARCHAR(10)    NOT NULL CHECK (empl_role IN ('Manager', 'Cashier')),
     salary           DECIMAL(13, 4) NOT NULL CHECK (salary >= 0),
     date_of_birth    DATE           NOT NULL,
     date_of_start    DATE           NOT NULL,
