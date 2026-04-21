@@ -26,7 +26,6 @@ public class VozController {
     @GetMapping("/sql1")
     public List<Map<String, Object>> sql1Vira() {
         log.info("in sql 1 by vira");
-// клієет з максимальною кількістю куплених товарів
         String sql = """
                 SELECT cc.card_number, cc.cust_surname, cc.cust_name, SUM(s.product_number) as products_bought
                 FROM Customer_Card cc
@@ -50,20 +49,22 @@ public class VozController {
     @GetMapping("/sql2/{category_number}")
     public List<CustomerCard> sql2Vira(@PathVariable int category_number) {
         log.info("in sql 2 by vira");
-
-        return jdbc.query(
-                "SELECT * " +
-                "FROM Customer_Card cc " +
-                "WHERE NOT EXISTS ("+
-                        "SELECT 1 FROM \"Check\" ch "+
-                        "WHERE cc.card_number = ch.card_number "+
-                        "AND NOT EXISTS ("+
-                                "SELECT 1 "+
-                                "FROM Sale s JOIN Store_Product sp ON s.upc = sp.upc "+
-                                "JOIN Product p ON sp.id_product = p.id_product "+
-                                "WHERE s.check_number = ch.check_number "+
-                                "AND p.category_number = ?))",
-                new CustomerCardDaoImpl.CustomerCardRowMapper(),
+        String sql = """
+                SELECT *
+                FROM Customer_Card cc
+                WHERE cc.card_number IN (
+                SELECT ch.card_number FROM "Check" ch)
+                  AND NOT EXISTS (
+                  SELECT 1 FROM "Check" ch
+                           WHERE cc.card_number = ch.card_number
+                             AND NOT EXISTS (
+                             SELECT 1
+                             FROM Sale s JOIN Store_Product sp ON s.upc = sp.upc
+                                 JOIN Product p ON sp.id_product = p.id_product
+                             WHERE s.check_number = ch.check_number
+                               AND p.category_number = ?))
+                """;
+        return jdbc.query(sql ,new CustomerCardDaoImpl.CustomerCardRowMapper(),
                 category_number);
     }
 

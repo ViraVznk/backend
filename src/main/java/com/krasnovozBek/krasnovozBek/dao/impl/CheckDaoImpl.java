@@ -101,7 +101,7 @@ public class CheckDaoImpl implements CheckDao {
             """;
         return jdbcTemplate.query(sql, new CheckRowMapper(), idEmployee, day);
     }
-
+    //  "GROUP BY s.UPC, p.product_name, s.product_number, s.selling_price"
     @Override
     public List<Map<String, Object>> findSalesByCheckNumber(String checkNumber) {
         return jdbcTemplate.queryForList(
@@ -109,8 +109,8 @@ public class CheckDaoImpl implements CheckDao {
                         "FROM Sale s " +
                         "JOIN Store_Product sp ON s.UPC = sp.UPC OR s.UPC = sp.UPC_prom " +
                         "JOIN Product p ON sp.id_product = p.id_product " +
-                        "WHERE s.check_number = ? " +
-                        "GROUP BY s.UPC, p.product_name, s.product_number, s.selling_price",
+                        "WHERE s.check_number = ? ",
+
                 checkNumber);
     }
     @Override

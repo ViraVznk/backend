@@ -65,10 +65,10 @@ CREATE TABLE Employee (
 
 CREATE TABLE Customer_Card (
     card_number     VARCHAR(13)    NOT NULL,
-    cust_surname    VARCHAR(50)    NOT NULL,
-    cust_name       VARCHAR(50)    NOT NULL,
+    cust_surname    VARCHAR(50)    NOT NULL CHECK (cust_surname <>''),
+    cust_name       VARCHAR(50)    NOT NULL CHECK (cust_name <>''),
     cust_patronymic VARCHAR(50)    NULL,
-    phone_number    VARCHAR(13)    NOT NULL,
+    phone_number    VARCHAR(13)    NOT NULL CHECK (phone_number <>''),
     city            VARCHAR(50)    NULL,
     street          VARCHAR(50)    NULL,
     zip_code        VARCHAR(9)     NULL,
